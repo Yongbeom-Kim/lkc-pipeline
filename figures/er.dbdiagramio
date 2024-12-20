@@ -1,7 +1,7 @@
 Table "Request" {
   "RequestID" INT [pk, increment]
-  "RequestorName" VARCHAR(100) [not null]
-  "PhotographerName" VARCHAR(100)
+  "RequestorID" INT [not null]
+  "PhotographerID" INT
   "DateofRequest" DATETIME [not null, default: `CURRENT_TIMESTAMP`]
   "ImagingStartDate" DATETIME [not null]
   "ImagingEndDate" DATETIME [not null]
@@ -11,9 +11,9 @@ Table "Request" {
   "RequestStatus" VARCHAR(50)
   "PhysicalSpecimenClusterLocationID" INT [not null]
   "CreatedDate" DATETIME [not null]
-  "CreatedBy" VARCHAR(200) [not null]
+  "CreatedBy" INT [not null]
   "UpdatedDate" DATETIME
-  "ModifiedBy" VARCHAR(200)
+  "ModifiedBy" INT
 }
 
 Table "User" {
@@ -44,12 +44,13 @@ Table "Location" {
 
 Table "Media" {
   "MediaID" INT [pk, increment]
+  "RequestID" INT [not null]
   "MediaFileName" VARCHAR(100) [not null]
   "FilePath" VARCHAR(500) [not null]
   "CatalogID" VARCHAR(250) [not null]
   "MorphoID" VARCHAR(500)
   "ClusterID" VARCHAR(500)
-  "UserId" INT
+  "UserID" INT
   "ImagingDate" DATETIME
   "Resolution" VARCHAR(50)
   "ColorDepth" VARCHAR(20)
@@ -65,4 +66,10 @@ Table "Media" {
   "ModifiedBy" VARCHAR(200)
 }
 
-Ref:"User"."UserID" < "Media"."UserId"
+Ref:"User"."UserID" < "Media"."UserID"
+Ref:"User"."UserID" < "Request"."RequestorID"
+Ref:"User"."UserID" < "Request"."PhotographerID"
+Ref:"User"."UserID" < "Request"."CreatedBy"
+Ref:"User"."UserID" < "Request"."ModifiedBy"
+Ref:"Location"."LocationID" < "Request"."PhysicalSpecimenClusterLocationID"
+Ref:"Request"."RequestID" < "Media"."RequestID"
