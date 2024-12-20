@@ -1,0 +1,68 @@
+Table "Request" {
+  "RequestID" INT [pk, increment]
+  "RequestorName" VARCHAR(100) [not null]
+  "PhotographerName" VARCHAR(100)
+  "DateofRequest" DATETIME [not null, default: `CURRENT_TIMESTAMP`]
+  "ImagingStartDate" DATETIME [not null]
+  "ImagingEndDate" DATETIME [not null]
+  "ImagingPlatform" TEXT [not null]
+  "SummaryofProject" TEXT [not null]
+  "Remarks" TEXT
+  "RequestStatus" VARCHAR(50)
+  "PhysicalSpecimenClusterLocationID" INT [not null]
+  "CreatedDate" DATETIME [not null]
+  "CreatedBy" VARCHAR(200) [not null]
+  "UpdatedDate" DATETIME
+  "ModifiedBy" VARCHAR(200)
+}
+
+Table "User" {
+  "UserID" INT [pk, increment]
+  "UserName" VARCHAR(100) [not null]
+  "UserType" VARCHAR(50) [not null]
+  "Email" VARCHAR(100) [unique, not null]
+  "ContactNumber" INT [not null]
+  "Organisation" VARCHAR(150)
+  "DateofRequest" DATETIME [not null, default: `CURRENT_TIMESTAMP`]
+  "RequestStatus" VARCHAR(50)
+  "CreatedDate" DATETIME [not null]
+  "CreatedBy" VARCHAR(200) [not null]
+  "UpdatedDate" DATETIME
+  "ModifiedBy" VARCHAR(200)
+}
+
+Table "Location" {
+  "LocationID" INT [pk, increment]
+  "LocationName" VARCHAR(100) [not null]
+  "Email" VARCHAR(100) [unique, not null]
+  "ContactNumber" INT [not null]
+  "CreatedDate" DATETIME [not null]
+  "CreatedBy" VARCHAR(200) [not null]
+  "UpdatedDate" DATETIME
+  "ModifiedBy" VARCHAR(200)
+}
+
+Table "Media" {
+  "MediaID" INT [pk, increment]
+  "MediaFileName" VARCHAR(100) [not null]
+  "FilePath" VARCHAR(500) [not null]
+  "CatalogID" VARCHAR(250) [not null]
+  "MorphoID" VARCHAR(500)
+  "ClusterID" VARCHAR(500)
+  "UserId" INT
+  "ImagingDate" DATETIME
+  "Resolution" VARCHAR(50)
+  "ColorDepth" VARCHAR(20)
+  "FileSize" VARCHAR(20)
+  "Description" TEXT
+  "CameraModel" VARCHAR(255)
+  "ImageEditingTool" VARCHAR(255)
+  "IsMorphoIDExists" BOOLEAN
+  "IsClusterIDExists" BOOLEAN
+  "CreatedDate" DATETIME [not null]
+  "CreatedBy" VARCHAR(200) [not null]
+  "UpdatedDate" DATETIME
+  "ModifiedBy" VARCHAR(200)
+}
+
+Ref:"User"."UserID" < "Media"."UserId"
