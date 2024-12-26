@@ -7,6 +7,12 @@ Table "Request" {
   "ImagingEndDate" DATETIME [not null]
   "ImagingPlatform" TEXT [not null]
   "SummaryofProject" TEXT [not null]
+  "ImagingObjectType" TEXT [not null]
+  "Resolution" TEXT
+  "FileFormat" TEXT [not null]
+  "ColorDepth" TEXT
+  "AspectRatio" TEXT
+  "ImageOrientation" TEXT
   "Remarks" TEXT
   "RequestStatus" VARCHAR(50)
   "PhysicalSpecimenClusterLocationID" INT [not null]
@@ -21,7 +27,7 @@ Table "User" {
   "UserName" VARCHAR(100) [not null]
   "UserType" VARCHAR(50) [not null]
   "Email" VARCHAR(100) [unique, not null]
-  "ContactNumber" INT [not null]
+  "ContactNumber" INT
   "Organisation" VARCHAR(150)
   "DateofRequest" DATETIME [not null, default: `CURRENT_TIMESTAMP`]
   "RequestStatus" VARCHAR(50)
@@ -29,6 +35,7 @@ Table "User" {
   "CreatedBy" VARCHAR(200) [not null]
   "UpdatedDate" DATETIME
   "ModifiedBy" VARCHAR(200)
+  "AdditionalNotes" TEXT
 }
 
 Table "Location" {
@@ -69,7 +76,5 @@ Table "Media" {
 Ref:"User"."UserID" < "Media"."UserID"
 Ref:"User"."UserID" < "Request"."RequestorID"
 Ref:"User"."UserID" < "Request"."PhotographerID"
-Ref:"User"."UserID" < "Request"."CreatedBy"
-Ref:"User"."UserID" < "Request"."ModifiedBy"
 Ref:"Location"."LocationID" < "Request"."PhysicalSpecimenClusterLocationID"
 Ref:"Request"."RequestID" < "Media"."RequestID"
